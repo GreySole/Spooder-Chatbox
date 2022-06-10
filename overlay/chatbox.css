@@ -1,0 +1,173 @@
+body{
+	position:fixed;
+	bottom:0;
+	font-size:28px;
+	font-family: Verdana;
+}
+
+.chatbox-main{
+	max-height:100%;
+	max-width:100%;
+	overflow:hidden;
+	transition: max-height 0.5s ease-in-out;
+	display:flex;
+	flex-flow:column;
+	flex-wrap:wrap;
+	background-color:rgba(0,0,0,0.75);
+	color:white;
+	border-radius:5px;
+	border: #0099CC 4px solid;
+}
+
+.chatbox-main:empty{
+	transition: max-height 0.5s ease-in-out;
+	max-height:0;
+	display:none;
+}
+
+.chatbox-message{
+	display:inline-block;
+	flex-flow:row;
+	align-items:center;
+	padding:5px;
+	padding-right:30px;
+	padding-left:20px;
+	border-radius:5px;
+	animation-duration: 0.5s;
+	animation-name:ghostin;
+}
+
+.message-name{
+	display:inline-block;
+	align-self: flex-start;
+	margin-right:5px;
+	font-weight:bold;
+}
+
+img[emote]{
+	
+	transform:scale(1.2);
+}
+
+.message-name::before{
+	content:'';
+	display:none;
+	margin-right:10px;
+	align-self: center;
+	width:24px;
+	height:24px;
+}
+
+.broadcaster::before{
+	display:inline-block;
+	-webkit-mask: url(./TwitchBadges/broadcaster.svg) no-repeat;
+  	mask: url(./TwitchBadges/broadcaster.svg) no-repeat;
+  	-webkit-mask-size: cover;
+  	mask-size: cover;
+	background-color:red;
+}
+
+.mod::before{
+	display:inline-block;
+	-webkit-mask: url(./TwitchBadges/mod.svg) no-repeat;
+  	mask: url(./TwitchBadges/mod.svg) no-repeat;
+  	-webkit-mask-size: cover;
+  	mask-size: cover;
+	background-color:rgb(0, 255, 0);
+}
+
+.staff::before{
+	display:inline-block;
+	-webkit-mask: url(./TwitchBadges/staff.svg) no-repeat;
+  	mask: url(./TwitchBadges/staff.svg) no-repeat;
+  	-webkit-mask-size: cover;
+  	mask-size: cover;
+	background-color:white;
+}
+
+.admin::before{
+	display:inline-block;
+	-webkit-mask: url(./TwitchBadges/admin.svg) no-repeat;
+  	mask: url(./TwitchBadges/admin.svg) no-repeat;
+  	-webkit-mask-size: cover;
+  	mask-size: cover;
+	background-color:orange;
+}
+
+.verified::before{
+	display:inline-block;
+	-webkit-mask: url(./TwitchBadges/verified.svg) no-repeat;
+  	mask: url(./TwitchBadges/verified.svg) no-repeat;
+  	-webkit-mask-size: cover;
+  	mask-size: cover;
+	background-color:purple;
+}
+
+.vip::before{
+	display:inline-block;
+	-webkit-mask: url(./TwitchBadges/VIP.svg) no-repeat;
+  	mask: url(./TwitchBadges/VIP.svg) no-repeat;
+  	-webkit-mask-size: cover;
+  	mask-size: cover;
+	background-color:rgb(255, 42, 166);
+}
+
+.chatbox-message.firstMsg{
+	animation-name:firstMsgPulse;
+	animation-iteration-count:infinite;
+	animation-duration:2s;
+}
+
+.message-content{
+	display:block;
+	word-break:break-word;
+	white-space: pre-wrap;
+	align-items:center;
+}
+
+.chatbox-message img{
+	display:inline-block;
+	margin-left:5px;
+	margin-right:5px;
+}
+
+@keyframes ghostin{
+	from{
+		opacity:0;
+		height:0%;
+	}
+	to{
+		opacity:1.0;
+		height:100%;
+	}
+}
+
+@keyframes ghostout{
+	from{
+		opacity:1.0;
+		height:100%;
+	}
+	to{
+		opacity:0;
+		height:0%;
+	}
+}
+
+@keyframes firstMsgPulse{
+	0%{
+		background-color:rgba(255, 42, 166, 0);
+	}
+	50%{
+		background-color:rgba(255, 42, 166, 0.5);
+	}
+	100%{
+		background-color:rgba(255, 42, 166, 0);
+	}
+
+}
+
+@media only screen and (max-width: 600px) {
+  body {
+    font-size:16px;
+  }
+}
