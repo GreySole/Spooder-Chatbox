@@ -1,0 +1,61 @@
+{
+    "form":{
+        "windowcolor":{
+            "label":"Window Color",
+            "type":"color"
+        },
+        "windowopacity":{
+            "label":"Window Opacity",
+            "type":"range",
+            "options":{
+                "min":0,
+                "max":100,
+                "step":5
+            }
+        },
+        "bordercolor":{
+            "label":"Border Color",
+            "type":"color"
+        },
+        "borderopacity":{
+            "label":"Border Opacity",
+            "type":"range",
+            "options":{
+                "min":0,
+                "max":100,
+                "step":5
+            }
+        },
+        "textcolor":{
+            "label":"Text Color",
+            "type":"color"
+        },
+        "defaultnamecolor":{
+            "label":"Default Name Color",
+            "type":"color"
+        },
+        "usernamecolor":{
+            "label":"Use viewer's custom color if available",
+            "type":"boolean"
+        },
+        "botinchat":{
+            "label":"Display Bot Messages (Toggle with !botinchat)",
+            "type":"boolean"
+        },
+        "owo":{
+            "label":"OwO Spooder face mimicking",
+            "type":"boolean"
+        }
+    },
+    "defaults":{
+        "windowcolor":"#000000",
+        "windowopacity":70,
+        "bordercolor":"#0099FF",
+        "borderopacity":100,
+        "textcolor":"#FFFFFF",
+        "defaultnamecolor":"#FFFFFF",
+        "usernamecolor":true,
+        "botinchat":true,
+        "owo":true
+    }
+}

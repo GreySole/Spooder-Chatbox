@@ -1,11 +1,11 @@
 {
   "name": "Spooder Chatbox",
-  "version": "1.0.0",
+  "version": "4.0.1",
   "description": "Takes all chat messages to display on overlay",
   "main": "command.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Grey Sole",
   "license": "ISC"
 }

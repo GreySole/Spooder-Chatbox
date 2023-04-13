@@ -1,7 +1,7 @@
 body{
 	position:fixed;
 	bottom:0;
-	font-size:28px;
+	font-size:24px;
 	font-family: Verdana;
 }
 
@@ -39,7 +39,7 @@ body{
 
 .message-name{
 	display:inline-block;
-	align-self: flex-start;
+	align-self: center;
 	margin-right:5px;
 	font-weight:bold;
 }
@@ -112,6 +112,15 @@ img[emote]{
 	background-color:rgb(255, 42, 166);
 }
 
+.discord::before{
+	display:inline-block;
+	-webkit-mask: url(./DiscordBadges/discord.svg) no-repeat;
+  	mask: url(./DiscordBadges/discord.svg) no-repeat;
+  	-webkit-mask-size: cover;
+  	mask-size: cover;
+	background-color:rgb(161, 127, 255);
+}
+
 .chatbox-message.firstMsg{
 	animation-name:firstMsgPulse;
 	animation-iteration-count:infinite;
@@ -168,6 +177,11 @@ img[emote]{
 
 @media only screen and (max-width: 600px) {
   body {
-    font-size:16px;
+    font-size:18px;
   }
+
+  .message-name::before{
+	width:18px;
+	height:18px;
+}
 }

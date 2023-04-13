@@ -1,3 +1,5 @@
+const path = require("path");
+
 class ChatBox {
 	
 	constructor() {
@@ -21,6 +23,8 @@ class ChatBox {
 		/╲/\( ºp ω qº )/\╱\
 	`,
 	};
+
+	lastMessage = null;
 	
 	commandList = {
 		
@@ -37,43 +41,58 @@ class ChatBox {
 	
 	
 	onChat(message){
+		
 		if(message.message.includes("<iframe") ||
 		message.message.includes("<img") ||
 		message.message.includes("<video")){
 			
-			sayInChat("I ate that bug. It was delicious "+this.expressions.happy);
+			message.respond("I see an HTML media tag, so I probably shouldn't send that to chatbox.");
 			return;
 		}
 
 		if(this.settings.owo){
 			if((message.message.toLowerCase().length == 3 && message.message.toLowerCase().charAt(1)=="w")
 			||(message.message.toLowerCase().length == 5 && message.message.toLowerCase().charAt(2)=="w")){
-				let eyes = message.message.split(/[wW]/g);
+				let eyes = ["?","?"];
+				if(message.message.toLowerCase().length == 3 && message.message.toLowerCase().charAt(1)=="w"){
+					eyes = [message.message.charAt(0), message.message.charAt(2)];
+				}else{
+					eyes = [message.message.charAt(0)+message.message.charAt(1), message.message.charAt(3)+message.message.charAt(4)];
+				}
 				let expression = String.raw`
 				/╲/\( º${eyes[0]} ω ${eyes[1]}º )/\╱\
 				`
-				sayInChat(expression);
+				message.respond(expression);
 			}
 		}
 
-		if(message.message == "!botInChat"){
+		
+
+		if(message.message == "!botinchat" && (chatIsBroadcaster(message) || chatIsMod(message))){
 			this.settings.botinchat = !this.settings.botinchat;
 			if(this.settings.botinchat){
-				sayInChat("I will show in Chatbox "+this.expressions.happy);
+				message.respond("I will show in Chatbox "+this.expressions.happy);
 			}else{
-				sayInChat("I will not show in Chatbox "+this.expressions.pwq);
+				message.respond("I will not show in Chatbox "+this.expressions.pwq);
 			}
+		}
 
-			
+		if(message.message.startsWith("!")){
+			return;
 		}
 
 		if(!this.settings.botinchat){
-			if(message.username == username){
+			if(message.username == botUsername){
 				return;
 			}
 		}
+
+		if(message.message == this.lastMessage){
+			return;
+		}
+		this.lastMessage = message.message;
 		
-		sendToTCP("/chat/general", JSON.stringify({message:this.txtEncoder.encode(message.message), tags:message.tags}));
+		sendToTCP("/chat/general", JSON.stringify({message:this.txtEncoder.encode(message.message), channel:message.channel, tags:message.tags}));
 	}
 }
 

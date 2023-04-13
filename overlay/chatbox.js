@@ -1,6 +1,6 @@
-var oscConnected = false;
-
 var txtDecoder = new TextDecoder();
+var urlParams = new URLSearchParams(window.location.search);
+var targetChannel = urlParams.get("channel");
 
 var testUser = {
 	"name":"GreyBoiGaming",
@@ -58,10 +58,12 @@ function makeChatLine(message, user, emotes){
 		return;
 	}
 
+	console.log(user);
+
 	let userBadges = [];
 	let windowBadges = [];
 
-	if(user){
+	if(user.badges){
 		userBadges = Object.keys(user.badges);
 	}
 
@@ -69,6 +71,7 @@ function makeChatLine(message, user, emotes){
 	if(user.subscriber == 1){userBadges.push("subscriber");}
 	if(user.turbo == 1){userBadges.push("turbo");}
 	if(user.firstMsg == 1){console.log("FIRST MESSAGE"); windowBadges.push("firstMsg");}
+	if(user.discord == 1) {userBadges.push("discord");}
 	
 	let chatEl = document.createElement("div");
 	chatEl.className = "chatbox-message "+windowBadges.join(" ");
@@ -88,10 +91,12 @@ function makeChatLine(message, user, emotes){
 	if(pluginSettings.usernamecolor == false || user["color"] == "" || user["color"] == null){
 		user["color"] = pluginSettings.defaultnamecolor;
 	}
+	if(user.discord == 1){
+		user["name"] = user["name"]+" #"+user["dChannel"];
+	}
 	chatLine += "<span class='message-content' style='color:"+pluginSettings.textcolor+"'><span class='message-name "+userBadges.join(" ")+"' style='color:"+user["color"]+"'>"+user["name"]+":</span>";
 	if(emotes.length > 0){
 		emotes = emotes.sort(function(a,b){
-			console.log(a.start, b.start);
 			return a.start - b.start;
 		});
 		
@@ -109,15 +114,19 @@ function makeChatLine(message, user, emotes){
 	chatEl.innerHTML = chatLine;
 	
 	document.querySelector(".chatbox-main").append(chatEl);
-	
-	setTimeout(() => {
+	chatEl.ghostOut = () => {
 		chatEl.style.animationName = "ghostout";
 		chatEl.style.animationDuration = "0.5s";
 		chatEl.style.animationIterationCount = 1;
 		chatEl.addEventListener("animationend", function(){
 			chatEl.remove();
 		});
-	}, 30000);
+	}
+	if(document.querySelector(".chatbox-main").children.length>10){
+		document.querySelector(".chatbox-main").firstElementChild.remove();
+	}
+	
+	setTimeout( chatEl.ghostOut, 30000);
 }
 
 function testChatLine(customMsg){
@@ -163,11 +172,16 @@ function getOSCMessage(message){
 	switch(address[1]){
 		case 'chat':
 		let messageData = JSON.parse(message.args[0]);
+		if(targetChannel != null){
+			if(messageData.channel != targetChannel){
+				return;
+			}
+		}
 			
 			makeChatLine(txtDecoder.decode(Uint8Array.from(Object.values(messageData.message))), 
 			{name:messageData.tags.displayName,color:messageData.tags.color, badges:messageData.tags.badges, 
 				mod:messageData.tags.mod, subscriber:messageData.tags.subscriber, turbo:messageData.tags.turbo,
-				firstMsg:messageData.tags.firstMsg}, 
+				firstMsg:messageData.tags.firstMsg, discord:messageData.tags.discord, dChannel:messageData.channelname}, 
 			messageData.tags.emotes);
 		break;
 		case 'settings':
