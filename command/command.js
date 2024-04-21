@@ -4,6 +4,7 @@ class ChatBox {
 	
 	constructor() {
 		this.onChat = this.onChat.bind(this);
+		this.onEvent = this.onEvent.bind(this);
 	}
 
 	expressions ={
@@ -31,15 +32,17 @@ class ChatBox {
 	};
 	
 	txtEncoder = new TextEncoder();
+
+	deleteMessage(userstate){
+		console.log("DELETED", userstate);
+		sendToTCP("/chat/delete", userstate["target-msg-id"]);
+	}
 	
 	
 	testMe(){
 		
 	}
 
-	//onEvent(eventData){}
-	
-	
 	onChat(message){
 		
 		if(message.message.includes("<iframe") ||
@@ -50,7 +53,11 @@ class ChatBox {
 			return;
 		}
 
-		if(this.settings.owo){
+		let owo = this.settings.owo;
+		if(message.channel != twitch.homeChannel && this.settings.shares[message.channel] != null){
+			owo = this.settings.shares[message.channel]?.owo;
+		}
+		if(owo == true){
 			if((message.message.toLowerCase().length == 3 && message.message.toLowerCase().charAt(1)=="w")
 			||(message.message.toLowerCase().length == 5 && message.message.toLowerCase().charAt(2)=="w")){
 				let eyes = ["?","?"];
@@ -68,8 +75,13 @@ class ChatBox {
 
 		
 
-		if(message.message == "!botinchat" && (chatIsBroadcaster(message) || chatIsMod(message))){
-			this.settings.botinchat = !this.settings.botinchat;
+		if(message.message == "!botinchat" && (twitch.chatIsBroadcaster(message) || twitch.chatIsMod(message))){
+			if(message.channel != twitch.homeChannel && this.settings.shares[message.channel] != null){
+				this.settings.shares[message.channel].botinchat = !this.settings.shares[message.channel].botinchat;
+			}else{
+				this.settings.botinchat = !this.settings.botinchat;
+			}
+			
 			if(this.settings.botinchat){
 				message.respond("I will show in Chatbox "+this.expressions.happy);
 			}else{
@@ -81,8 +93,12 @@ class ChatBox {
 			return;
 		}
 
-		if(!this.settings.botinchat){
-			if(message.username == botUsername){
+		let botInChat = this.settings.botinchat;
+		if(message.channel != twitch.homeChannel && this.settings.shares[message.channel] != null){
+			botInChat = this.settings.shares[message.channel].botinchat;
+		}
+		if(botInChat == false){
+			if(message.username == message.botUsername){
 				return;
 			}
 		}
@@ -91,8 +107,15 @@ class ChatBox {
 			return;
 		}
 		this.lastMessage = message.message;
-		
+		//console.log(message);
 		sendToTCP("/chat/general", JSON.stringify({message:this.txtEncoder.encode(message.message), channel:message.channel, tags:message.tags}));
+	}
+
+	onEvent(type, data){
+		console.log("ON EVENT",type, data);
+		if(type == "messagedeleted" && data.platform == "twitch"){
+			this.deleteMessage(data.userstate);
+		}
 	}
 }
 

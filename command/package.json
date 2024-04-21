@@ -1,6 +1,6 @@
 {
   "name": "Spooder Chatbox",
-  "version": "4.0.1",
+  "version": "0.4.9",
   "description": "Takes all chat messages to display on overlay",
   "main": "command.js",
   "scripts": {

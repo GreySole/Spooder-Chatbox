@@ -1,5 +1,25 @@
 {
     "form":{
+        "messagetimeout":{
+            "label":"Seconds to keep messages (Set 0 for forever)",
+            "type":"number"
+        },
+        "maxmessages":{
+            "label":"Max messages on screen",
+            "type":"number"
+        },
+        "windowmode":{
+            "label":"Window Mode",
+            "type":"select",
+            "options":{
+                "selections":{
+                    "compact":"Compact",
+                    "fwidth":"Full Width",
+                    "fheight":"Full Window"
+                },
+                "required":true
+            }
+        },
         "windowcolor":{
             "label":"Window Color",
             "type":"color"
@@ -13,9 +33,197 @@
                 "step":5
             }
         },
+        "defaultfont":{
+            "label":"Default Font",
+            "type":"select",
+            "options":{
+                "selections":{
+                    "sans-serif":"Sans Serif",
+                    "serif":"Serif",
+                    "monospace":"Monospace",
+                    "Cursive":"cursive"
+                }
+            }
+        },
+        "usecustomfont":{
+            "label":"Use Custom Font",
+            "type":"checkbox"
+        },
+        "customfonturl":{
+            "label":"Custom Font URL",
+            "type":"text",
+            "showif":{
+                "variable":"usecustomfont",
+                "condition":"==",
+                "value":true
+            }
+        },
+        "useimage":{
+            "label":"Use BG Image",
+            "type":"checkbox"
+        },
+        "backgroundimage":{
+            "label":"Background Image",
+            "type":"asset",
+            "showif":{
+                "variable":"useimage",
+                "condition":"==",
+                "value":true
+            },
+            "options":{
+                "folder":"img"
+            }
+        },
+        "bgfill":{
+            "label":"BG Fill Type",
+            "type":"select",
+            "showif":{
+                "variable":"useimage",
+                "condition":"==",
+                "value":false
+            },
+            "options":{
+                "selections":{
+                    "none":"unset",
+                    "cover":"Cover",
+                    "contain":"Contain"
+                }
+            }
+        },
+        "bgopacity":{
+            "label":"BG Image Opacity",
+            "type":"range",
+            "options":{
+                "min":0,
+                "max":1,
+                "step":0.05
+            }
+        },
+        "tilebg":{
+            "label":"Tile BG Image",
+            "type":"checkbox",
+            "showif":{
+                "variable":"useimage",
+                "condition":"==",
+                "value":true
+            }
+        },
+        "tilebgsize":{
+            "label":"BG Tile Size",
+            "type":"number",
+            "showif":{
+                "variable":"tilebg",
+                "condition":"==",
+                "value":true
+            }
+        },
+        "scrollspeed":{
+            "label":"BG Tile Speed (Seconds)",
+            "type":"number",
+            "showif":{
+                "variable":"tilebg",
+                "condition":"==",
+                "value":true
+            }
+        },
+        "scrollbgx":{
+            "label":"Scroll BG X",
+            "type":"select",
+            "showif":{
+                "variable":"tilebg",
+                "condition":"==",
+                "value":true
+            },
+            "options":{
+                "selections":{
+                    "0":"None",
+                    "1":"Right",
+                    "-1":"Left"
+                }
+            }
+        },
+        "scrollbgy":{
+            "label":"Scroll BG Y",
+            "type":"select",
+            "showif":{
+                "variable":"tilebg",
+                "condition":"==",
+                "value":true
+            },
+            "options":{
+                "selections":{
+                    "0":"None",
+                    "1":"Down",
+                    "-1":"Up"
+                }
+            }
+        },
+        "border_useimage":{
+            "label":"Use Border Image",
+            "type":"checkbox"
+        },
+        "border_image":{
+            "label":"Border Image",
+            "type":"asset",
+            "showif":{
+                "variable":"border_useimage",
+                "condition":"==",
+                "value":true
+            },
+            "options":{
+                "folder":"img"
+            }
+        },
+        "border_image_slice":{
+            "label":"Border Image Slice %",
+            "type":"range",
+            "showif":{
+                "variable":"border_useimage",
+                "condition":"==",
+                "value":true
+            },
+            "options":{
+                "min":0,
+                "max":100,
+                "step":1
+            }
+        },
+        "border_image_width":{
+            "label":"Border Image Width px",
+            "type":"range",
+            "showif":{
+                "variable":"border_useimage",
+                "condition":"==",
+                "value":true
+            },
+            "options":{
+                "min":0,
+                "max":100,
+                "step":1
+            }
+        },
+        "border_image_margin":{
+            "label":"Chatbox Margin to fit Border Image",
+            "type":"range",
+            "showif":{
+                "variable":"border_useimage",
+                "condition":"==",
+                "value":true
+            },
+            "options":{
+                "min":0,
+                "max":20,
+                "step":1
+            }
+        },
         "bordercolor":{
             "label":"Border Color",
-            "type":"color"
+            "type":"color",
+            "showif":{
+                "variable":"border_useimage",
+                "condition":"!=",
+                "value":true
+            }
         },
         "borderopacity":{
             "label":"Border Opacity",
@@ -45,17 +253,306 @@
         "owo":{
             "label":"OwO Spooder face mimicking",
             "type":"boolean"
+        },
+        "shares":{
+            "label":"Shares",
+            "type":"subform",
+            "form":{
+                "keyname":{
+                    "label":"Twitch Username",
+                    "type":"text",
+                    "options":{
+                        "json-friendly":true
+                    }
+                },
+                "messagetimeout":{
+                    "label":"Seconds to keep messages (Set 0 for forever)",
+                    "type":"number"
+                },
+                "maxmessages":{
+                    "label":"Max messages on screen",
+                    "type":"number"
+                },
+                "windowmode":{
+                    "label":"Window Mode",
+                    "type":"select",
+                    "options":{
+                        "selections":{
+                            "compact":"Compact",
+                            "fwidth":"Full Width",
+                            "fheight":"Full Window"
+                        },
+                        "required":true
+                    }
+                },
+                "windowcolor":{
+                    "label":"Window Color",
+                    "type":"color"
+                },
+                "windowopacity":{
+                    "label":"Window Opacity",
+                    "type":"range",
+                    "options":{
+                        "min":0,
+                        "max":100,
+                        "step":5
+                    }
+                },
+                "useimage":{
+                    "label":"Use BG Image",
+                    "type":"checkbox"
+                },
+                "backgroundimage":{
+                    "label":"Background Image",
+                    "type":"asset",
+                    "showif":{
+                        "variable":"useimage",
+                        "condition":"==",
+                        "value":true
+                    },
+                    "options":{
+                        "folder":"img"
+                    }
+                },
+                "bgfill":{
+                    "label":"BG Fill Type",
+                    "type":"select",
+                    "showif":{
+                        "variable":"useimage",
+                        "condition":"==",
+                        "value":false
+                    },
+                    "options":{
+                        "selections":{
+                            "none":"unset",
+                            "cover":"Cover",
+                            "contain":"Contain"
+                        }
+                    }
+                },
+                "bgopacity":{
+                    "label":"BG Image Opacity",
+                    "type":"range",
+                    "options":{
+                        "min":0,
+                        "max":1,
+                        "step":0.05
+                    }
+                },
+                "tilebg":{
+                    "label":"Tile BG Image",
+                    "type":"checkbox",
+                    "showif":{
+                        "variable":"useimage",
+                        "condition":"==",
+                        "value":true
+                    }
+                },
+                "tilebgsize":{
+                    "label":"BG Tile Size",
+                    "type":"number",
+                    "showif":{
+                        "variable":"tilebg",
+                        "condition":"==",
+                        "value":true
+                    }
+                },
+                "scrollspeed":{
+                    "label":"BG Tile Speed (Seconds)",
+                    "type":"number",
+                    "showif":{
+                        "variable":"tilebg",
+                        "condition":"==",
+                        "value":true
+                    }
+                },
+                "scrollbgx":{
+                    "label":"Scroll BG X",
+                    "type":"select",
+                    "showif":{
+                        "variable":"tilebg",
+                        "condition":"==",
+                        "value":true
+                    },
+                    "options":{
+                        "selections":{
+                            "0":"None",
+                            "1":"Right",
+                            "-1":"Left"
+                        }
+                    }
+                },
+                "scrollbgy":{
+                    "label":"Scroll BG Y",
+                    "type":"select",
+                    "showif":{
+                        "variable":"tilebg",
+                        "condition":"==",
+                        "value":true
+                    },
+                    "options":{
+                        "selections":{
+                            "0":"None",
+                            "1":"Down",
+                            "-1":"Up"
+                        }
+                    }
+                },
+                "border_useimage":{
+                    "label":"Use Border Image",
+                    "type":"checkbox"
+                },
+                "border_image":{
+                    "label":"Border Image",
+                    "type":"asset",
+                    "showif":{
+                        "variable":"border_useimage",
+                        "condition":"==",
+                        "value":true
+                    },
+                    "options":{
+                        "folder":"img"
+                    }
+                },
+                "border_image_slice":{
+                    "label":"Border Image Slice %",
+                    "type":"range",
+                    "showif":{
+                        "variable":"border_useimage",
+                        "condition":"==",
+                        "value":true
+                    },
+                    "options":{
+                        "min":0,
+                        "max":100,
+                        "step":1
+                    }
+                },
+                "border_image_width":{
+                    "label":"Border Image Width px",
+                    "type":"range",
+                    "showif":{
+                        "variable":"border_useimage",
+                        "condition":"==",
+                        "value":true
+                    },
+                    "options":{
+                        "min":0,
+                        "max":100,
+                        "step":1
+                    }
+                },
+                "border_image_margin":{
+                    "label":"Chatbox Margin to fit Border Image",
+                    "type":"range",
+                    "showif":{
+                        "variable":"border_useimage",
+                        "condition":"==",
+                        "value":true
+                    },
+                    "options":{
+                        "min":0,
+                        "max":20,
+                        "step":1
+                    }
+                },
+                "bordercolor":{
+                    "label":"Border Color",
+                    "type":"color",
+                    "showif":{
+                        "variable":"border_useimage",
+                        "condition":"!=",
+                        "value":true
+                    }
+                },
+                "borderopacity":{
+                    "label":"Border Opacity",
+                    "type":"range",
+                    "options":{
+                        "min":0,
+                        "max":100,
+                        "step":5
+                    }
+                },
+                "textcolor":{
+                    "label":"Text Color",
+                    "type":"color"
+                },
+                "defaultnamecolor":{
+                    "label":"Default Name Color",
+                    "type":"color"
+                },
+                "usernamecolor":{
+                    "label":"Use viewer's custom color if available",
+                    "type":"boolean"
+                },
+                "botinchat":{
+                    "label":"Display Bot Messages (Toggle with !botinchat)",
+                    "type":"boolean"
+                },
+                "owo":{
+                    "label":"OwO Spooder face mimicking",
+                    "type":"boolean"
+                }
+            }
         }
     },
     "defaults":{
+        "messagetimeout":30,
+        "maxmessages":10,
+        "windowmode":"fheight",
         "windowcolor":"#000000",
         "windowopacity":70,
+        "defaultfont":"sans-serif",
+        "usecustomfont":false,
+        "customfonturl":"",
+        "useimage":false,
+        "backgroundimage":"",
+        "bgfill":"cover",
+        "bgopacity":1.0,
+        "tilebg":false,
+        "tilebgsize":150,
+        "scrollbgx":0,
+        "scrollbgy":0,
+        "border_useimage":false,
+        "border_image":"",
+        "border_image_slice":25,
+        "border_image_width":50,
+        "border_image_margin":5,
+        "scrollspeed":5,
         "bordercolor":"#0099FF",
         "borderopacity":100,
         "textcolor":"#FFFFFF",
         "defaultnamecolor":"#FFFFFF",
         "usernamecolor":true,
         "botinchat":true,
-        "owo":true
+        "owo":true,
+        "shares":{
+            "messagetimeout":30,
+            "maxmessages":10,
+            "windowcolor":"#000000",
+            "windowopacity":70,
+            "useimage":false,
+            "backgroundimage":"",
+            "bgfill":"cover",
+            "bgopacity":1.0,
+            "tilebg":false,
+            "tilebgsize":150,
+            "scrollbgx":0,
+            "scrollbgy":0,
+            "border_useimage":false,
+            "border_image":"",
+            "border_image_slice":25,
+            "border_image_width":50,
+            "border_image_margin":5,
+            "scrollspeed":5,
+            "bordercolor":"#0099FF",
+            "borderopacity":100,
+            "textcolor":"#FFFFFF",
+            "defaultnamecolor":"#FFFFFF",
+            "usernamecolor":true,
+            "botinchat":true,
+            "owo":true
+        }
     }
 }

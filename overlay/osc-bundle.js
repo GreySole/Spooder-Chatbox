@@ -2022,7 +2022,7 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
 
 },{}],5:[function(require,module,exports){
 
-const SpooderVersion = "0.4.1";
+const SpooderVersion = "0.5.0";
 const OSC = require('osc-js');
 console.log("OSC GET");
 
@@ -2035,6 +2035,7 @@ var lastGood = null;
 
 window.oscIP = null;
 window.oscPort = null;
+window.udp = false;
 window.pluginName = window.location.pathname.split("/")[2];
 window.pluginSettings = null;
 
@@ -2054,7 +2055,6 @@ async function getOSCSettings(){
 	pluginSettings = oscSettings.settings;
 	oscIP = oscSettings.host;
 	oscPort = oscSettings.port;
-	
 	initOSC(oscIP, oscPort);
 	
 }
@@ -2062,7 +2062,7 @@ async function getOSCSettings(){
 function initOSC(serverIP, serverPort){
 	
   if(isExternal){
-    serverIP = serverIP.split("/")[2];
+    serverIP = serverIP.substring(("https://").length)
     tcpPlugin = new OSC.WebsocketClientPlugin({host:serverIP,port:null,secure:true});
   }else{
     tcpPlugin = new OSC.WebsocketClientPlugin({host:serverIP,port:serverPort,secure:false});

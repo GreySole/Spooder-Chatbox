@@ -1,22 +1,125 @@
+:root{
+	--background-image:url('');
+	--background-image-opacity:1.0;
+	--background-size:contain;
+	--background-scroll-x:0;
+	--background-scroll-y:0;
+	--background-scroll-speed:5s;
+	--border-image:url('');
+	--border-image-slice: 25%;
+	--border-image-margin: 5px;
+	--border-image-width:50px;
+
+	--background-color:rgba(0,0,0,0.8);
+	--border-color:#0099CC;
+
+	--custom-font:url("");
+	--chatbox-font:Verdana;
+}
+
 body{
 	position:fixed;
 	bottom:0;
+	padding:0;
+	margin:0;
 	font-size:24px;
-	font-family: Verdana;
+	font-family: var(--chatbox-font);
+}
+
+body.fwidth{
+	width:100vw;
+}
+
+body.fheight{
+	height:100vh;
+}
+
+@keyframes bgScroll{
+	0%{
+		background-position-x:0;
+		background-position-y:0;
+	}
+	100%{
+		background-position-x:var(--background-scroll-x);
+		background-position-y:var(--background-scroll-y);
+	}
+}
+
+.chatbox-main::after{
+	content: "";
+	position: absolute;
+	top: 0; left: 0; right: 0; bottom: 0;
+	width:inherit;
+	height:inherit;
+	opacity:var(--background-image-opacity);
+	background-image: var(--background-image);
+	background-size:var(--background-size);
+	
+	animation:bgScroll var(--background-scroll-speed) linear;
+	animation-iteration-count: infinite;
+	border-radius:15px;
+}
+
+.chatbox-main.border-image::after{
+	margin:var(--border-image-margin);
+
+}
+
+body.fwidth .chatbox-main::after{
+	width:100%;
+}
+
+body.fheight .chatbox-main::after{
+	height:100%;
 }
 
 .chatbox-main{
-	max-height:100%;
+	max-height: 100vh;
 	max-width:100%;
 	overflow:hidden;
-	transition: max-height 0.5s ease-in-out;
 	display:flex;
 	flex-flow:column;
-	flex-wrap:wrap;
-	background-color:rgba(0,0,0,0.75);
-	color:white;
-	border-radius:5px;
-	border: #0099CC 4px solid;
+	flex-wrap:nowrap;
+	background-color:var(--background-color);
+	border-radius:15px;
+}
+
+.chatbox-main.border-image{
+	margin:var(--border-image-margin);
+}
+
+
+
+body.fheight .chatbox-main{
+	height: 100%;
+	max-width:100%;
+	overflow:hidden;
+	display:flex;
+	flex-flow:column-reverse;
+	flex-wrap:nowrap;
+}
+
+.chatbox-main::before{
+	content: "";
+	z-index:2;
+	position: absolute;
+	top: 0; left: 0; right: 0; bottom: 0;
+	width:inherit;
+	height:inherit;
+	border: var(--border-color) 4px solid;
+	border-radius:15px;
+}
+
+.chatbox-main.border-image::before{
+	border: var(--border-color) 4px solid;
+	border-image: var(--border-image);
+    border-style: solid;
+    border-image-slice: var(--border-image-slice);
+    border-width: var(--border-image-width);
+}
+
+body.fheight .chatbox-main::before{
+	box-sizing: border-box;
 }
 
 .chatbox-main:empty{
@@ -25,7 +128,13 @@ body{
 	display:none;
 }
 
+body.fheight .chatbox-main:empty{
+	display:block;
+	max-height:100%;
+}
+
 .chatbox-message{
+	z-index:1;
 	display:inline-block;
 	flex-flow:row;
 	align-items:center;
@@ -34,19 +143,16 @@ body{
 	padding-left:20px;
 	border-radius:5px;
 	animation-duration: 0.5s;
-	animation-name:ghostin;
+	animation-name:heightIn;
+	border-bottom: 2px solid var(--border-color);
 }
 
 .message-name{
-	display:inline-block;
+	display:flex;
 	align-self: center;
 	margin-right:5px;
+	margin-bottom:5px;
 	font-weight:bold;
-}
-
-img[emote]{
-	
-	transform:scale(1.2);
 }
 
 .message-name::before{
@@ -60,6 +166,7 @@ img[emote]{
 
 .broadcaster::before{
 	display:inline-block;
+	align-self:center;
 	-webkit-mask: url(./TwitchBadges/broadcaster.svg) no-repeat;
   	mask: url(./TwitchBadges/broadcaster.svg) no-repeat;
   	-webkit-mask-size: cover;
@@ -132,33 +239,51 @@ img[emote]{
 	word-break:break-word;
 	white-space: pre-wrap;
 	align-items:center;
+	width:100%;
 }
 
 .chatbox-message img{
 	display:inline-block;
-	margin-left:5px;
-	margin-right:5px;
+	vertical-align: middle;
+}
+
+@keyframes heightIn{
+	from{
+		max-height:0;
+		opacity:0;
+	}
+	to{
+		max-height:500px;
+		opacity:1.0;
+	}
+}
+
+@keyframes heightOut{
+	from{
+		max-height:500px;
+		opacity:1.0;
+	}
+	to{
+		max-height:0;
+		opacity:0;
+	}
 }
 
 @keyframes ghostin{
 	from{
 		opacity:0;
-		height:0%;
 	}
 	to{
 		opacity:1.0;
-		height:100%;
 	}
 }
 
 @keyframes ghostout{
 	from{
 		opacity:1.0;
-		height:100%;
 	}
 	to{
 		opacity:0;
-		height:0%;
 	}
 }
 
@@ -176,12 +301,5 @@ img[emote]{
 }
 
 @media only screen and (max-width: 600px) {
-  body {
-    font-size:18px;
-  }
-
-  .message-name::before{
-	width:18px;
-	height:18px;
-}
+  
 }
