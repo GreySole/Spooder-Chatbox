@@ -1,0 +1,465 @@
+{
+  "form": {
+    "messagetimeout": {
+      "label": "Seconds to keep messages (Set 0 for forever)",
+      "type": "number"
+    },
+    "maxmessages": {
+      "label": "Max messages on screen",
+      "type": "number"
+    },
+    "textcolor": {
+      "label": "Default Text Color",
+      "type": "color"
+    },
+    "defaultnamecolor": {
+      "label": "Default Name Color",
+      "type": "color"
+    },
+    "usernamecolor": {
+      "label": "Use viewer's custom color if available",
+      "type": "boolean"
+    },
+    "window": {
+      "label": "Window",
+      "type": "section",
+      "fields": {
+        "windowmode": {
+          "label": "Window Mode",
+          "type": "select",
+          "options": {
+            "selections": {
+              "compact": "Compact",
+              "fwidth": "Full Width",
+              "fheight": "Full Window"
+            },
+            "required": true
+          }
+        },
+        "windowcolor": {
+          "label": "Window Color",
+          "type": "color"
+        },
+        "windowopacity": {
+          "label": "Window Opacity",
+          "type": "range",
+          "options": {
+            "min": 0,
+            "max": 100,
+            "step": 5
+          }
+        }
+      }
+    },
+    "font": {
+      "label": "Font",
+      "type": "section",
+      "fields": {
+        "defaultfont": {
+          "label": "Default Font",
+          "type": "select",
+          "options": {
+            "selections": {
+              "sans-serif": "Sans Serif",
+              "serif": "Serif",
+              "monospace": "Monospace",
+              "Cursive": "cursive"
+            }
+          }
+        },
+        "fontsize": {
+          "label": "Font Size (rem)",
+          "type": "range",
+          "description": "Font size is 16px. This is a multiplier by rem unit",
+          "options": {
+            "min": 0.1,
+            "max": 5,
+            "step": 0.1
+          }
+        },
+        "usecustomfont": {
+          "label": "Use Custom Font",
+          "type": "checkbox"
+        },
+        "customfonttype": {
+          "label": "Custom Font Type",
+          "type": "select",
+          "options": {
+            "selections": {
+              "url": "URL",
+              "asset": "Asset"
+            }
+          }
+        },
+        "customfonturl": {
+          "label": "Custom Font URL",
+          "type": "text",
+          "showif": [
+            {
+              "variable": "usecustomfont",
+              "condition": "==",
+              "value": true
+            },
+            {
+              "variable": "customfonttype",
+              "condition": "==",
+              "value": "url"
+            }
+          ]
+        },
+        "customfontasset": {
+          "label": "Custom Font Asset",
+          "type": "asset",
+          "options": {
+            "folder": "fonts"
+          },
+          "showif": [
+            {
+              "variable": "usecustomfont",
+              "condition": "==",
+              "value": true
+            },
+            {
+              "variable": "customfonttype",
+              "condition": "==",
+              "value": "asset"
+            }
+          ]
+        },
+        "textoutline": {
+          "label": "Text Outline",
+          "type": "checkbox"
+        },
+        "textoutlinewidth": {
+          "label": "Text Outline Width",
+          "type": "number",
+          "showif": {
+            "variable": "textoutline",
+            "condition": "==",
+            "value": true
+          }
+        },
+        "textoutlinecolor": {
+          "label": "Text Outline Color",
+          "type": "color",
+          "showif": {
+            "variable": "textoutline",
+            "condition": "==",
+            "value": true
+          }
+        },
+        "textshadow": {
+          "label": "Text Shadow",
+          "type": "checkbox"
+        },
+        "textshadowoffsetx": {
+          "label": "Text Shadow Offset X",
+          "type": "number",
+          "showif": {
+            "variable": "textshadow",
+            "condition": "==",
+            "value": true
+          }
+        },
+        "textshadowoffsety": {
+          "label": "Text Shadow Offset Y",
+          "type": "number",
+          "showif": {
+            "variable": "textshadow",
+            "condition": "==",
+            "value": true
+          }
+        },
+        "textshadowblur": {
+          "label": "Text Shadow Blur",
+          "type": "number",
+          "showif": {
+            "variable": "textshadow",
+            "condition": "==",
+            "value": true
+          }
+        },
+        "textshadowcolor": {
+          "label": "Text Shadow Color",
+          "type": "color",
+          "showif": {
+            "variable": "textshadow",
+            "condition": "==",
+            "value": true
+          }
+        },
+        "textshadowopacity": {
+          "label": "Text Shadow Opacity",
+          "type": "range",
+          "options": {
+            "min": 0,
+            "max": 1,
+            "step": 0.1
+          }
+        }
+      }
+    },
+
+    "bg": {
+      "label": "Background Image",
+      "type": "section",
+      "fields": {
+        "useimage": {
+          "label": "Use BG Image",
+          "type": "checkbox"
+        },
+        "backgroundimage": {
+          "label": "Background Image",
+          "type": "asset",
+          "showif": {
+            "variable": "useimage",
+            "condition": "==",
+            "value": true
+          },
+          "options": {
+            "folder": "img"
+          }
+        },
+        "bgfill": {
+          "label": "BG Fill Type",
+          "type": "select",
+          "showif": {
+            "variable": "useimage",
+            "condition": "==",
+            "value": false
+          },
+          "options": {
+            "selections": {
+              "none": "unset",
+              "cover": "Cover",
+              "contain": "Contain"
+            }
+          }
+        },
+        "bgopacity": {
+          "label": "BG Image Opacity",
+          "type": "range",
+          "options": {
+            "min": 0,
+            "max": 1,
+            "step": 0.05
+          },
+          "showif": {
+            "variable": "useimage",
+            "condition": "==",
+            "value": true
+          }
+        },
+        "tilebg": {
+          "label": "Tile BG Image",
+          "type": "checkbox",
+          "showif": {
+            "variable": "useimage",
+            "condition": "==",
+            "value": true
+          }
+        },
+        "tilebgsize": {
+          "label": "BG Tile Size",
+          "type": "number",
+          "showif": {
+            "variable": "tilebg",
+            "condition": "==",
+            "value": true
+          }
+        },
+        "scrollspeed": {
+          "label": "BG Tile Speed (Seconds)",
+          "type": "number",
+          "showif": {
+            "variable": "tilebg",
+            "condition": "==",
+            "value": true
+          }
+        },
+        "scrollbgx": {
+          "label": "Scroll BG X",
+          "type": "select",
+          "showif": {
+            "variable": "tilebg",
+            "condition": "==",
+            "value": true
+          },
+          "options": {
+            "selections": {
+              "0": "None",
+              "1": "Right",
+              "-1": "Left"
+            }
+          }
+        },
+        "scrollbgy": {
+          "label": "Scroll BG Y",
+          "type": "select",
+          "showif": {
+            "variable": "tilebg",
+            "condition": "==",
+            "value": true
+          },
+          "options": {
+            "selections": {
+              "0": "None",
+              "1": "Down",
+              "-1": "Up"
+            }
+          }
+        }
+      }
+    },
+
+    "border": {
+      "label": "Border",
+      "type": "section",
+      "fields": {
+        "border_useimage": {
+          "label": "Use Border Image",
+          "type": "checkbox"
+        },
+        "border_image": {
+          "label": "Border Image",
+          "type": "asset",
+          "showif": {
+            "variable": "border_useimage",
+            "condition": "==",
+            "value": true
+          },
+          "options": {
+            "folder": "img"
+          }
+        },
+        "border_image_slice": {
+          "label": "Border Image Slice %",
+          "type": "range",
+          "showif": {
+            "variable": "border_useimage",
+            "condition": "==",
+            "value": true
+          },
+          "options": {
+            "min": 0,
+            "max": 100,
+            "step": 1
+          }
+        },
+        "border_image_width": {
+          "label": "Border Image Width px",
+          "type": "range",
+          "showif": {
+            "variable": "border_useimage",
+            "condition": "==",
+            "value": true
+          },
+          "options": {
+            "min": 0,
+            "max": 100,
+            "step": 1
+          }
+        },
+        "border_image_margin": {
+          "label": "Chatbox Margin to fit Border Image",
+          "type": "range",
+          "showif": {
+            "variable": "border_useimage",
+            "condition": "==",
+            "value": true
+          },
+          "options": {
+            "min": 0,
+            "max": 20,
+            "step": 1
+          }
+        },
+        "bordercolor": {
+          "label": "Border Color",
+          "type": "color",
+          "showif": {
+            "variable": "border_useimage",
+            "condition": "!=",
+            "value": true
+          }
+        },
+        "borderopacity": {
+          "label": "Border Opacity",
+          "type": "range",
+          "options": {
+            "min": 0,
+            "max": 100,
+            "step": 5
+          }
+        }
+      }
+    },
+    "bot": {
+      "label": "Bot Stuff",
+      "type": "section",
+      "fields": {
+        "botinchat": {
+          "label": "Display Bot Messages (Toggle with !botinchat)",
+          "type": "boolean"
+        },
+        "owo": {
+          "label": "OwO Spooder face mimicking",
+          "type": "boolean"
+        }
+      }
+    }
+  },
+  "defaults": {
+    "messagetimeout": 30,
+    "maxmessages": 10,
+    "textcolor": "#FFFFFF",
+    "defaultnamecolor": "#FFFFFF",
+    "usernamecolor": true,
+    "window": {
+      "windowmode": "fheight",
+      "windowcolor": "#000000",
+      "windowopacity": 70
+    },
+    "font": {
+      "defaultfont": "sans-serif",
+      "fontsize": 1.5,
+      "usecustomfont": false,
+      "customfonturl": "",
+      "textoutline": false,
+      "textoutlinewidth": 1,
+      "textoutlinecolor": "#000000",
+      "textshadow": false,
+      "textshadowoffsetx": 1,
+      "textshadowoffsety": 1,
+      "textshadowblur": 1,
+      "textshadowcolor": "#000000",
+      "textshadowopacity": 0.5
+    },
+
+    "bg": {
+      "useimage": false,
+      "backgroundimage": "",
+      "bgfill": "cover",
+      "bgopacity": 1.0,
+      "tilebg": false,
+      "tilebgsize": 150,
+      "scrollbgx": 0,
+      "scrollbgy": 0,
+      "scrollspeed": 5
+    },
+
+    "border": {
+      "border_useimage": false,
+      "border_image": "",
+      "border_image_slice": 25,
+      "border_image_width": 50,
+      "border_image_margin": 5,
+      "bordercolor": "#0099FF",
+      "borderopacity": 100
+    },
+    "bot": {
+      "botinchat": true,
+      "owo": true
+    }
+  }
+}

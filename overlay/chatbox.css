@@ -1,305 +1,307 @@
-:root{
-	--background-image:url('');
-	--background-image-opacity:1.0;
-	--background-size:contain;
-	--background-scroll-x:0;
-	--background-scroll-y:0;
-	--background-scroll-speed:5s;
-	--border-image:url('');
-	--border-image-slice: 25%;
-	--border-image-margin: 5px;
-	--border-image-width:50px;
+:root {
+  --background-image: url('');
+  --background-image-opacity: 1;
+  --background-size: contain;
+  --background-scroll-x: 0;
+  --background-scroll-y: 0;
+  --background-scroll-speed: 5s;
+  --border-image: url('');
+  --border-image-slice: 25%;
+  --border-image-margin: 5px;
+  --border-image-width: 50px;
 
-	--background-color:rgba(0,0,0,0.8);
-	--border-color:#0099CC;
+  --background-color: rgba(0, 0, 0, 0.8);
+  --border-color: #0099cc;
 
-	--custom-font:url("");
-	--chatbox-font:Verdana;
+  --custom-font: url('');
+  --chatbox-font: Verdana;
+  --chatbox-font-size: 1.5rem;
 }
 
-body{
-	position:fixed;
-	bottom:0;
-	padding:0;
-	margin:0;
-	font-size:24px;
-	font-family: var(--chatbox-font);
+body {
+  position: fixed;
+  bottom: 0;
+  padding: 0;
+  margin: 0;
+  font-size: var(--chatbox-font-size);
+  font-family: var(--chatbox-font), Arial, sans-serif;
 }
 
-body.fwidth{
-	width:100vw;
+body.fwidth {
+  width: 100vw;
 }
 
-body.fheight{
-	height:100vh;
+body.fheight {
+  height: 100vh;
 }
 
-@keyframes bgScroll{
-	0%{
-		background-position-x:0;
-		background-position-y:0;
-	}
-	100%{
-		background-position-x:var(--background-scroll-x);
-		background-position-y:var(--background-scroll-y);
-	}
+@keyframes bgScroll {
+  0% {
+    background-position-x: 0;
+    background-position-y: 0;
+  }
+  100% {
+    background-position-x: var(--background-scroll-x);
+    background-position-y: var(--background-scroll-y);
+  }
 }
 
-.chatbox-main::after{
-	content: "";
-	position: absolute;
-	top: 0; left: 0; right: 0; bottom: 0;
-	width:inherit;
-	height:inherit;
-	opacity:var(--background-image-opacity);
-	background-image: var(--background-image);
-	background-size:var(--background-size);
-	
-	animation:bgScroll var(--background-scroll-speed) linear;
-	animation-iteration-count: infinite;
-	border-radius:15px;
+.chatbox-main::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: inherit;
+  height: inherit;
+  opacity: var(--background-image-opacity);
+  background-image: var(--background-image);
+  background-size: var(--background-size);
+
+  animation: bgScroll var(--background-scroll-speed) linear;
+  animation-iteration-count: infinite;
+  border-radius: 15px;
 }
 
-.chatbox-main.border-image::after{
-	margin:var(--border-image-margin);
-
+.chatbox-main.border-image::after {
+  margin: var(--border-image-margin);
 }
 
-body.fwidth .chatbox-main::after{
-	width:100%;
+body.fwidth .chatbox-main::after {
+  width: 100%;
 }
 
-body.fheight .chatbox-main::after{
-	height:100%;
+body.fheight .chatbox-main::after {
+  height: 100%;
 }
 
-.chatbox-main{
-	max-height: 100vh;
-	max-width:100%;
-	overflow:hidden;
-	display:flex;
-	flex-flow:column;
-	flex-wrap:nowrap;
-	background-color:var(--background-color);
-	border-radius:15px;
+.chatbox-main {
+  max-height: 100vh;
+  max-width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-flow: column;
+  flex-wrap: nowrap;
+  background-color: var(--background-color);
+  border-radius: 15px;
 }
 
-.chatbox-main.border-image{
-	margin:var(--border-image-margin);
+.chatbox-main.border-image {
+  margin: var(--border-image-margin);
 }
 
-
-
-body.fheight .chatbox-main{
-	height: 100%;
-	max-width:100%;
-	overflow:hidden;
-	display:flex;
-	flex-flow:column-reverse;
-	flex-wrap:nowrap;
+body.fheight .chatbox-main {
+  height: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-flow: column-reverse;
+  flex-wrap: nowrap;
 }
 
-.chatbox-main::before{
-	content: "";
-	z-index:2;
-	position: absolute;
-	top: 0; left: 0; right: 0; bottom: 0;
-	width:inherit;
-	height:inherit;
-	border: var(--border-color) 4px solid;
-	border-radius:15px;
+.chatbox-main::before {
+  content: '';
+  z-index: 2;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: inherit;
+  height: inherit;
+  border: var(--border-color) 4px solid;
+  border-radius: 15px;
 }
 
-.chatbox-main.border-image::before{
-	border: var(--border-color) 4px solid;
-	border-image: var(--border-image);
-    border-style: solid;
-    border-image-slice: var(--border-image-slice);
-    border-width: var(--border-image-width);
+.chatbox-main.border-image::before {
+  border: var(--border-color) 4px solid;
+  border-image: var(--border-image);
+  border-style: solid;
+  border-image-slice: var(--border-image-slice);
+  border-width: var(--border-image-width);
 }
 
-body.fheight .chatbox-main::before{
-	box-sizing: border-box;
+body.fheight .chatbox-main::before {
+  box-sizing: border-box;
 }
 
-.chatbox-main:empty{
-	transition: max-height 0.5s ease-in-out;
-	max-height:0;
-	display:none;
+.chatbox-main:empty {
+  transition: max-height 0.5s ease-in-out;
+  max-height: 0;
+  display: none;
 }
 
-body.fheight .chatbox-main:empty{
-	display:block;
-	max-height:100%;
+body.fheight .chatbox-main:empty {
+  display: block;
+  max-height: 100%;
 }
 
-.chatbox-message{
-	z-index:1;
-	display:inline-block;
-	flex-flow:row;
-	align-items:center;
-	padding:5px;
-	padding-right:30px;
-	padding-left:20px;
-	border-radius:5px;
-	animation-duration: 0.5s;
-	animation-name:heightIn;
-	border-bottom: 2px solid var(--border-color);
+.chatbox-message {
+  z-index: 1;
+  display: inline-block;
+  flex-flow: row;
+  align-items: center;
+  padding: 5px;
+  padding-right: 30px;
+  padding-left: 20px;
+  border-radius: 5px;
+  animation-duration: 0.5s;
+  animation-name: heightIn;
+  border-bottom: 2px solid var(--border-color);
 }
 
-.message-name{
-	display:flex;
-	align-self: center;
-	margin-right:5px;
-	margin-bottom:5px;
-	font-weight:bold;
+.message-name {
+  display: flex;
+  align-self: center;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  font-weight: bold;
 }
 
-.message-name::before{
-	content:'';
-	display:none;
-	margin-right:10px;
-	align-self: center;
-	width:24px;
-	height:24px;
+.message-name::before {
+  content: '';
+  display: none;
+  margin-right: 10px;
+  align-self: center;
+  width: 24px;
+  height: 24px;
 }
 
-.broadcaster::before{
-	display:inline-block;
-	align-self:center;
-	-webkit-mask: url(./TwitchBadges/broadcaster.svg) no-repeat;
-  	mask: url(./TwitchBadges/broadcaster.svg) no-repeat;
-  	-webkit-mask-size: cover;
-  	mask-size: cover;
-	background-color:red;
+.broadcaster::before {
+  display: inline-block;
+  align-self: center;
+  -webkit-mask: url(./TwitchBadges/broadcaster.svg) no-repeat;
+  mask: url(./TwitchBadges/broadcaster.svg) no-repeat;
+  -webkit-mask-size: cover;
+  mask-size: cover;
+  background-color: red;
 }
 
-.mod::before{
-	display:inline-block;
-	-webkit-mask: url(./TwitchBadges/mod.svg) no-repeat;
-  	mask: url(./TwitchBadges/mod.svg) no-repeat;
-  	-webkit-mask-size: cover;
-  	mask-size: cover;
-	background-color:rgb(0, 255, 0);
+.mod::before {
+  display: inline-block;
+  -webkit-mask: url(./TwitchBadges/mod.svg) no-repeat;
+  mask: url(./TwitchBadges/mod.svg) no-repeat;
+  -webkit-mask-size: cover;
+  mask-size: cover;
+  background-color: rgb(0, 255, 0);
 }
 
-.staff::before{
-	display:inline-block;
-	-webkit-mask: url(./TwitchBadges/staff.svg) no-repeat;
-  	mask: url(./TwitchBadges/staff.svg) no-repeat;
-  	-webkit-mask-size: cover;
-  	mask-size: cover;
-	background-color:white;
+.staff::before {
+  display: inline-block;
+  -webkit-mask: url(./TwitchBadges/staff.svg) no-repeat;
+  mask: url(./TwitchBadges/staff.svg) no-repeat;
+  -webkit-mask-size: cover;
+  mask-size: cover;
+  background-color: white;
 }
 
-.admin::before{
-	display:inline-block;
-	-webkit-mask: url(./TwitchBadges/admin.svg) no-repeat;
-  	mask: url(./TwitchBadges/admin.svg) no-repeat;
-  	-webkit-mask-size: cover;
-  	mask-size: cover;
-	background-color:orange;
+.admin::before {
+  display: inline-block;
+  -webkit-mask: url(./TwitchBadges/admin.svg) no-repeat;
+  mask: url(./TwitchBadges/admin.svg) no-repeat;
+  -webkit-mask-size: cover;
+  mask-size: cover;
+  background-color: orange;
 }
 
-.verified::before{
-	display:inline-block;
-	-webkit-mask: url(./TwitchBadges/verified.svg) no-repeat;
-  	mask: url(./TwitchBadges/verified.svg) no-repeat;
-  	-webkit-mask-size: cover;
-  	mask-size: cover;
-	background-color:purple;
+.verified::before {
+  display: inline-block;
+  -webkit-mask: url(./TwitchBadges/verified.svg) no-repeat;
+  mask: url(./TwitchBadges/verified.svg) no-repeat;
+  -webkit-mask-size: cover;
+  mask-size: cover;
+  background-color: purple;
 }
 
-.vip::before{
-	display:inline-block;
-	-webkit-mask: url(./TwitchBadges/VIP.svg) no-repeat;
-  	mask: url(./TwitchBadges/VIP.svg) no-repeat;
-  	-webkit-mask-size: cover;
-  	mask-size: cover;
-	background-color:rgb(255, 42, 166);
+.vip::before {
+  display: inline-block;
+  -webkit-mask: url(./TwitchBadges/VIP.svg) no-repeat;
+  mask: url(./TwitchBadges/VIP.svg) no-repeat;
+  -webkit-mask-size: cover;
+  mask-size: cover;
+  background-color: rgb(255, 42, 166);
 }
 
-.discord::before{
-	display:inline-block;
-	-webkit-mask: url(./DiscordBadges/discord.svg) no-repeat;
-  	mask: url(./DiscordBadges/discord.svg) no-repeat;
-  	-webkit-mask-size: cover;
-  	mask-size: cover;
-	background-color:rgb(161, 127, 255);
+.discord::before {
+  display: inline-block;
+  -webkit-mask: url(./DiscordBadges/discord.svg) no-repeat;
+  mask: url(./DiscordBadges/discord.svg) no-repeat;
+  -webkit-mask-size: cover;
+  mask-size: cover;
+  background-color: rgb(161, 127, 255);
 }
 
-.chatbox-message.firstMsg{
-	animation-name:firstMsgPulse;
-	animation-iteration-count:infinite;
-	animation-duration:2s;
+.chatbox-message.firstMsg {
+  animation-name: firstMsgPulse;
+  animation-iteration-count: infinite;
+  animation-duration: 2s;
 }
 
-.message-content{
-	display:block;
-	word-break:break-word;
-	white-space: pre-wrap;
-	align-items:center;
-	width:100%;
+.message-content {
+  display: block;
+  word-break: break-word;
+  white-space: pre-wrap;
+  align-items: center;
+  width: 100%;
 }
 
-.chatbox-message img{
-	display:inline-block;
-	vertical-align: middle;
+.chatbox-message img {
+  display: inline-block;
+  vertical-align: middle;
 }
 
-@keyframes heightIn{
-	from{
-		max-height:0;
-		opacity:0;
-	}
-	to{
-		max-height:500px;
-		opacity:1.0;
-	}
+@keyframes heightIn {
+  from {
+    max-height: 0;
+    opacity: 0;
+  }
+  to {
+    max-height: 500px;
+    opacity: 1;
+  }
 }
 
-@keyframes heightOut{
-	from{
-		max-height:500px;
-		opacity:1.0;
-	}
-	to{
-		max-height:0;
-		opacity:0;
-	}
+@keyframes heightOut {
+  from {
+    max-height: 500px;
+    opacity: 1;
+  }
+  to {
+    max-height: 0;
+    opacity: 0;
+  }
 }
 
-@keyframes ghostin{
-	from{
-		opacity:0;
-	}
-	to{
-		opacity:1.0;
-	}
+@keyframes ghostin {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
-@keyframes ghostout{
-	from{
-		opacity:1.0;
-	}
-	to{
-		opacity:0;
-	}
+@keyframes ghostout {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
 
-@keyframes firstMsgPulse{
-	0%{
-		background-color:rgba(255, 42, 166, 0);
-	}
-	50%{
-		background-color:rgba(255, 42, 166, 0.5);
-	}
-	100%{
-		background-color:rgba(255, 42, 166, 0);
-	}
-
+@keyframes firstMsgPulse {
+  0% {
+    background-color: rgba(255, 42, 166, 0);
+  }
+  50% {
+    background-color: rgba(255, 42, 166, 0.5);
+  }
+  100% {
+    background-color: rgba(255, 42, 166, 0);
+  }
 }
 
 @media only screen and (max-width: 600px) {
-  
 }
