@@ -28,21 +28,17 @@ class ChatBox {
   onLoad() {
     const twitch = this.modules.stream.twitch;
     twitch?.subscribeToModuleEvent('messagedeleted', (data) => {
-      console.log('CHATBOX MESSAGE DELETED', data);
       this.osc.sendToTCP('/chat/delete/message', data.userstate['target-msg-id']);
     });
     twitch?.subscribeToModuleEvent('ban', (data) => {
-      console.log('CHATBOX USER BANNED', data);
       this.osc.sendToTCP('/chat/ban/user', data.userstate['target-user-id']);
     });
 
     twitch?.subscribeToModuleEvent('clearchat', (data) => {
-      console.log('CHATBOX CLEAR CHAT', data);
       this.osc.sendToTCP('/chat/clear', 0);
     });
 
     twitch?.subscribeToModuleEvent('botmessage', (data) => {
-      console.log('CHATBOX BOT MESSAGE', data);
       this.onChat(data);
     });
 
@@ -106,8 +102,6 @@ class ChatBox {
     }
 
     let botInChat = settings.bot.botinchat;
-
-    console.log(message.botUsername, this.modules.stream.twitch);
 
     if (botInChat == false) {
       if (message.username == this.modules.stream.twitch?.botUsername) {
